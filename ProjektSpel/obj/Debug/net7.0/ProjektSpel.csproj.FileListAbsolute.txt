@@ -1,0 +1,32 @@
+C:\Users\Admin\Documents\Universitet\Grundläggande Programmering\Programmeringsprojekt\ProjektSpel\ProjektSpel\obj\Debug\net7.0\ProjektSpel.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\Documents\Universitet\Grundläggande Programmering\Programmeringsprojekt\ProjektSpel\ProjektSpel\obj\Debug\net7.0\ProjektSpel.AssemblyInfoInputs.cache
+C:\Users\Admin\Documents\Universitet\Grundläggande Programmering\Programmeringsprojekt\ProjektSpel\ProjektSpel\obj\Debug\net7.0\ProjektSpel.AssemblyInfo.cs
+C:\Users\Admin\Documents\Universitet\Grundläggande Programmering\Programmeringsprojekt\ProjektSpel\ProjektSpel\obj\Debug\net7.0\ProjektSpel.csproj.CoreCompileInputs.cache
+C:\Users\rosav\OneDrive\Dokument\Universitet\Grundläggande Programmering\Programmeringsprojekt\ProjektSpel\ProjektSpel\obj\Debug\net7.0\ProjektSpel.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\rosav\OneDrive\Dokument\Universitet\Grundläggande Programmering\Programmeringsprojekt\ProjektSpel\ProjektSpel\obj\Debug\net7.0\ProjektSpel.AssemblyInfoInputs.cache
+C:\Users\rosav\OneDrive\Dokument\Universitet\Grundläggande Programmering\Programmeringsprojekt\ProjektSpel\ProjektSpel\obj\Debug\net7.0\ProjektSpel.AssemblyInfo.cs
+C:\Users\rosav\OneDrive\Dokument\Universitet\Grundläggande Programmering\Programmeringsprojekt\ProjektSpel\ProjektSpel\obj\Debug\net7.0\ProjektSpel.csproj.CoreCompileInputs.cache
+C:\Users\rosav\OneDrive\Dokument\Universitet\Grundläggande Programmering\Programmeringsprojekt\ProjektSpel\ProjektSpel\bin\Debug\net7.0\ProjektSpel.exe
+C:\Users\rosav\OneDrive\Dokument\Universitet\Grundläggande Programmering\Programmeringsprojekt\ProjektSpel\ProjektSpel\bin\Debug\net7.0\ProjektSpel.deps.json
+C:\Users\rosav\OneDrive\Dokument\Universitet\Grundläggande Programmering\Programmeringsprojekt\ProjektSpel\ProjektSpel\bin\Debug\net7.0\ProjektSpel.runtimeconfig.json
+C:\Users\rosav\OneDrive\Dokument\Universitet\Grundläggande Programmering\Programmeringsprojekt\ProjektSpel\ProjektSpel\bin\Debug\net7.0\ProjektSpel.dll
+C:\Users\rosav\OneDrive\Dokument\Universitet\Grundläggande Programmering\Programmeringsprojekt\ProjektSpel\ProjektSpel\bin\Debug\net7.0\ProjektSpel.pdb
+C:\Users\rosav\OneDrive\Dokument\Universitet\Grundläggande Programmering\Programmeringsprojekt\ProjektSpel\ProjektSpel\obj\Debug\net7.0\ProjektSpel.dll
+C:\Users\rosav\OneDrive\Dokument\Universitet\Grundläggande Programmering\Programmeringsprojekt\ProjektSpel\ProjektSpel\obj\Debug\net7.0\refint\ProjektSpel.dll
+C:\Users\rosav\OneDrive\Dokument\Universitet\Grundläggande Programmering\Programmeringsprojekt\ProjektSpel\ProjektSpel\obj\Debug\net7.0\ProjektSpel.pdb
+C:\Users\rosav\OneDrive\Dokument\Universitet\Grundläggande Programmering\Programmeringsprojekt\ProjektSpel\ProjektSpel\obj\Debug\net7.0\ProjektSpel.genruntimeconfig.cache
+C:\Users\rosav\OneDrive\Dokument\Universitet\Grundläggande Programmering\Programmeringsprojekt\ProjektSpel\ProjektSpel\obj\Debug\net7.0\ref\ProjektSpel.dll
+C:\Users\Laptop\Downloads\ProjektSpel-Zip\ProjektSpel\ProjektSpel\bin\Debug\net7.0\ProjektSpel.exe
+C:\Users\Laptop\Downloads\ProjektSpel-Zip\ProjektSpel\ProjektSpel\bin\Debug\net7.0\ProjektSpel.deps.json
+C:\Users\Laptop\Downloads\ProjektSpel-Zip\ProjektSpel\ProjektSpel\bin\Debug\net7.0\ProjektSpel.runtimeconfig.json
+C:\Users\Laptop\Downloads\ProjektSpel-Zip\ProjektSpel\ProjektSpel\bin\Debug\net7.0\ProjektSpel.dll
+C:\Users\Laptop\Downloads\ProjektSpel-Zip\ProjektSpel\ProjektSpel\bin\Debug\net7.0\ProjektSpel.pdb
+C:\Users\Laptop\Downloads\ProjektSpel-Zip\ProjektSpel\ProjektSpel\obj\Debug\net7.0\ProjektSpel.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Laptop\Downloads\ProjektSpel-Zip\ProjektSpel\ProjektSpel\obj\Debug\net7.0\ProjektSpel.AssemblyInfoInputs.cache
+C:\Users\Laptop\Downloads\ProjektSpel-Zip\ProjektSpel\ProjektSpel\obj\Debug\net7.0\ProjektSpel.AssemblyInfo.cs
+C:\Users\Laptop\Downloads\ProjektSpel-Zip\ProjektSpel\ProjektSpel\obj\Debug\net7.0\ProjektSpel.csproj.CoreCompileInputs.cache
+C:\Users\Laptop\Downloads\ProjektSpel-Zip\ProjektSpel\ProjektSpel\obj\Debug\net7.0\ProjektSpel.dll
+C:\Users\Laptop\Downloads\ProjektSpel-Zip\ProjektSpel\ProjektSpel\obj\Debug\net7.0\refint\ProjektSpel.dll
+C:\Users\Laptop\Downloads\ProjektSpel-Zip\ProjektSpel\ProjektSpel\obj\Debug\net7.0\ProjektSpel.pdb
+C:\Users\Laptop\Downloads\ProjektSpel-Zip\ProjektSpel\ProjektSpel\obj\Debug\net7.0\ProjektSpel.genruntimeconfig.cache
+C:\Users\Laptop\Downloads\ProjektSpel-Zip\ProjektSpel\ProjektSpel\obj\Debug\net7.0\ref\ProjektSpel.dll
