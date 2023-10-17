@@ -1,4 +1,6 @@
-﻿namespace ProjektuppgiftNim
+﻿using System.Drawing;
+
+namespace ProjektuppgiftNim
 {
     internal class Program
     {
@@ -11,7 +13,7 @@
 
         static void Main(string[] args)
         {
-            Introduktion();
+            StartGame();
             LäsaInNamnPåSpelare();
             while (_pinnarHög0 > 0 || _pinnarHög1 > 0 || _pinnarHög2 > 0)
             {
@@ -25,49 +27,95 @@
                 ParseInput(input);
                 RitaSpelplan();
             }
-
-
         }
 
-        static void Introduktion()
+        static void StartGame()
         {
-            Console.BackgroundColor = ConsoleColor.White;
-            Console.Clear();
-            Console.BackgroundColor = ConsoleColor.Magenta;
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("SPELET NIM");
-            Console.BackgroundColor = ConsoleColor.White;
-            Console.WriteLine(" ");
-            Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.WriteLine("Välkommen till spelet Nim!");
-            Console.WriteLine(" ");
-            Console.ForegroundColor = ConsoleColor.Black;
+            PrintWelcome();
+            PrintGameRules();
+        }
+
+        static void PrintWelcome()
+        {
+            SetBackgroundTo("white");
+            SetTextHighlightTo("magenta");
+            SetTextColorTo("white");
+
+            Console.WriteLine("SPELET NIM\n");
+
+            SetTextHighlightTo("white");
+            SetTextColorTo("magenta");
+
+            Console.WriteLine("Välkommen till spelet Nim!\n");
+
+            SetTextColorTo("black");
+
             Console.WriteLine("(Tryck ENTER för att fortsätta)");
             Console.ReadKey();
-            Console.BackgroundColor = ConsoleColor.Magenta;
-            Console.Clear();
-            Console.BackgroundColor = ConsoleColor.White;
-            Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.WriteLine("SPELREGLER");
-            Console.BackgroundColor = ConsoleColor.Magenta;
-            Console.WriteLine(" ");
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("- Det kommer finnas tre högar med fem stickor i varje hög.");
-            Console.WriteLine(" ");
-            Console.WriteLine("- Spelaren kommer att få välja en hög genom att först skriva siffran 0 till 2 och sedan välja hur många stickor spelaren vill ta i högen genom att skriva siffran 1 till 5, men varje spelare måste ta minst en sticka");
-            Console.WriteLine(" ");
-            Console.WriteLine("- Sedan kommer spelaren att få välja hur många stickor spelaren vill ta i högen genom att skriva siffran 1 till 5");
-            Console.WriteLine(" ");
-            Console.WriteLine("- Spelaren måste ta minst en sticka");
-            Console.WriteLine(" ");
-            Console.WriteLine("- Spelaren som tar den sista stickan i den sista högen med stickor kvar, vinner!");
-            Console.WriteLine(" ");
-            Console.WriteLine(" ");
+        }
+
+        static void PrintGameRules()
+        {
+            SetBackgroundTo("magenta");
+            SetTextHighlightTo("white");
+            SetTextColorTo("magenta");
+
+            Console.WriteLine("SPELREGLER \n");
+
+            SetTextHighlightTo("magenta");
+            SetTextColorTo("white");
+
+            Console.WriteLine("- Det kommer finnas tre högar med fem stickor i varje hög.\n");
+            Console.WriteLine("- Sedan kommer spelaren att få välja hur många stickor spelaren vill ta i högen genom att skriva siffran 1 till 5.\n");
+            Console.WriteLine("- Spelaren måste ta minst en sticka.\n");
+            Console.WriteLine("- Spelaren som tar den sista stickan i den sista högen med stickor kvar, vinner!\n\n");
             Console.WriteLine("Tryck ENTER för att börja spela");
             Console.ReadKey();
             Console.Clear();
-
         }
+
+        static void SetBackgroundTo(string color)
+        {
+            if (color == "white")
+            {
+                Console.BackgroundColor = ConsoleColor.White;
+                Console.Clear();
+            }
+            else if (color == "magenta")
+            {
+                Console.BackgroundColor = ConsoleColor.Magenta;
+                Console.Clear();
+            }
+        }
+
+        static void SetTextHighlightTo(string highlightColor)
+        {
+            if (highlightColor == "magenta")
+            {
+                Console.BackgroundColor = ConsoleColor.Magenta;
+            }
+            else if (highlightColor == "white")
+            {
+                Console.BackgroundColor = ConsoleColor.White;
+            }
+        }
+
+        static void SetTextColorTo(string color)
+        {
+            if (color == "white")
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            else if (color == "magenta")
+            {
+                Console.ForegroundColor = ConsoleColor.Magenta;
+            }
+            else if (color == "black")
+            {
+                Console.ForegroundColor = ConsoleColor.Black;
+            }
+        }
+
         static void LäsaInNamnPåSpelare()
         {
             Console.WriteLine("Spelare 1:");
