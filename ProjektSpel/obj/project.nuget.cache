@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "A17FwdbYPyD43+0k+ajGnwHmx2yKFRzteYCG1WsPMM70AztXd4JvxGshjiYB2ZHX87bDemHL+XXWhGw8VSlMQw==",
+  "dgSpecHash": "NBgqWMkkixuE45+lmX9MO72wsHkMfd3DucNxpgn+R/4rnK4mG15W1a1xSZdrvnfr8atwCvVWiwlrRHe4fhNopA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Laptop\\Downloads\\ProjektSpel-Zip\\ProjektSpel\\ProjektSpel\\ProjektSpel.csproj",
+  "projectFilePath": "C:\\Users\\Laptop\\source\\repos\\NimGame\\ProjektSpel\\ProjektSpel.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
