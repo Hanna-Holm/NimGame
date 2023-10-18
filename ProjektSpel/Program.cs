@@ -4,35 +4,74 @@ namespace ProjektuppgiftNim
 {
     internal class Program
     {
-        static int _pinnarHög0 = 5;
-        static int _pinnarHög1 = 5;
-        static int _pinnarHög2 = 5;
-        static string _spelare1 = "";
-        static string _spelare2 = "";
-        static string _currentPlayer = "";
-
         static void Main(string[] args)
         {
             StartGame();
-            LäsaInNamnPåSpelare();
-            while (_pinnarHög0 > 0 || _pinnarHög1 > 0 || _pinnarHög2 > 0)
-            {
-                //CurrentPlayer();
-                RitaSpelplan();
-                string input = Console.ReadLine();
-                if (input.Equals("exit"))
-                {
-                    break;
-                }
-                ParseInput(input);
-                RitaSpelplan();
-            }
         }
 
         static void StartGame()
         {
             PrintWelcome();
             PrintGameRules();
+
+            // int numberOfPlayers = SelectNumberOfPlayers();
+            int numberOfPlayers = 1;
+
+            string playerOne = "";
+            string playerTwo = "";
+
+            do
+            {
+                if (numberOfPlayers == 1)
+                {
+                    playerOne = EnterName();
+                    playerTwo = "Computer";
+                }
+                else if (numberOfPlayers == 2)
+                {
+                    playerOne = EnterName();
+                    playerTwo = EnterName();
+                }
+            } while (playerOne == playerTwo);
+
+            int scoreOfPlayerOne = 0;
+            int scoreOfPlayerTwo = 0;
+
+            bool isRunning = true;
+
+            while (isRunning)
+            {
+                string currentPlayer = SelectStartingPlayer(playerOne, playerTwo);
+
+                int[] gameBoard = new int[] { 5, 5, 5 };
+
+                PrintGameBoard(gameBoard);
+
+                bool isGameBoardEmpty = false;
+
+                while (!isGameBoardEmpty)
+                {
+                    if (gameBoard[0] < 5 || gameBoard[1] < 5 || gameBoard[2] < 5)
+                    {
+                        currentPlayer = ChangeCurrentPlayer(currentPlayer, playerOne, playerTwo);
+                    }
+
+                    ShowCurrentPlayer(currentPlayer);
+
+                    if (currentPlayer == "Computer")
+                    {
+                        ComputerMove(gameBoard);
+                    }
+                    else
+                    {
+                        MakeMove(gameBoard);
+                    }
+
+                    isGameBoardEmpty = gameBoard[0] == 0 &&
+                                       gameBoard[1] == 0 &&
+                                       gameBoard[2] == 0;
+                }
+            }
         }
 
         static void PrintWelcome()
@@ -90,16 +129,105 @@ namespace ProjektuppgiftNim
             Console.ForegroundColor = textColor;
         }
 
-        static void LäsaInNamnPåSpelare()
+        static int SelectNumberOfPlayers()
         {
-            Console.WriteLine("Spelare 1:");
-            _spelare1 = Console.ReadLine();
+            // do while invalid number eller validNumber == false
+            // ta in input,
+            // kolla om heltal
+            // kolla om 1 eller 2.
+            // return number;
 
-            Console.WriteLine("Spelare 2:");
-            _spelare2 = (Console.ReadLine());
+            //Console.WriteLine("Välj antal spelare genom att skriva 1 eller 2.");
+            //string input = Console.ReadLine();
+            //int.TryParse(input, out int numberOfPlayers);
+            //if (numberOfPlayers == 1 || numberOfPlayers == 2)
+            //{
+            //    validNumber = true;
+            //}
+            //while (validNumber == false)
+            //{
+
+            //}
+
+            return 2;
+        }
+
+        static string EnterName()
+        {
+            // while names är samma
+            // fråga efter namn
+            return "Hanna";
+  
+        }
+        /*
+        Tidigare:
+            static void LäsaInNamnPåSpelare()
+            {
+                Console.WriteLine("Spelare 1:");
+                _spelare1 = Console.ReadLine();
+
+                Console.WriteLine("Spelare 2:");
+                _spelare2 = (Console.ReadLine());
+
+            }
+        */
+
+        static string SelectStartingPlayer(string playerOne, string playerTwo)
+        {
+            bool validNumber = false;
+
+            while (!validNumber)
+            {
+                Console.WriteLine("Who will start?");
+                Console.WriteLine("1: " + playerOne);
+                Console.WriteLine("2: " + playerTwo);
+                Console.Write("Choose 1 or 2: ");
+
+                string choice = Console.ReadLine();
+                bool isnumber = int.TryParse(choice, out int number);
+
+                if (isnumber)
+                {
+                    if (number == 1)
+                    {
+                        return playerOne;
+                    }
+                    else if (number == 2)
+                    {
+                        return playerTwo;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid number.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("You must enter a number.");
+                }
+            }
+
+            return "";
 
         }
-        static void RitaSpelplan()
+
+        static void PrintGameBoard(int[] gameBoard)
+        {
+            // [ 5, 5, 5 ]
+            for (int i = 0; i < gameBoard.Length; i++)
+            {
+                int numbersOfSticks = gameBoard[i];
+
+                for (int j = 0; j < numbersOfSticks; j++)
+                {
+                    Console.Write("|");
+                }
+                Console.WriteLine();
+            }
+        }
+        /*
+         * tidigare:
+         * static void RitaSpelplan()
         {
             Console.Clear();
             Console.WriteLine(_currentPlayer + "s tur!");
@@ -110,85 +238,195 @@ namespace ProjektuppgiftNim
             Console.WriteLine("Välj en hög, <mellanslag>, välj antal pinnar. Skriv \"exit\" för att lämna spelet.");
 
         }
-        static string Pinnar(int högNummer)
+         */
+
+        static string ChangeCurrentPlayer(string currentPlayer, string playerOne, string playerTwo)
         {
-            switch (högNummer)
+            if (currentPlayer == playerOne)
             {
-                case 0:
-                    return RitaUtPinnar(_pinnarHög0);
-                    break;
-                case 1:
-                    return RitaUtPinnar(_pinnarHög1);
-                    break;
-                case 2:
-                    return RitaUtPinnar(_pinnarHög2);
-                    break;
-            }
-            Console.WriteLine("Du måste skriva 0, 1 eller 2.");
-            Pinnar(högNummer);
-            return null; //fungerar ej
-        }
-        static string RitaUtPinnar(int antalPinnar)
-        {
-            //if (antalPinnar > 0 && antalPinnar <= 5)
-            {
-                string pinnar = "";
-                for (int i = 0; i < antalPinnar; i++)
-                {
-                    pinnar = pinnar + "|";
-
-                }
-                return pinnar;
-            }
-            //else
-            //{ 
-            //return "error";
-            //Console.WriteLine("You have written a non-funtion");
-            //}
-        }
-        static void ParseInput(string input)
-        {
-            if (int.TryParse(input, out int resultat))
-            {
-                string[] arr = input.Split(" ");
-
-                string högNummerStr = arr[0];
-                string antalPinnarStr = arr[1]; //error
-
-                int högNummer = int.Parse(högNummerStr);
-                int antalPinnar = int.Parse(antalPinnarStr);
-
-                if (högNummer == 0)
-                {
-                    _pinnarHög0 = _pinnarHög0 - antalPinnar;
-                }
-                if (högNummer == 1)
-                {
-                    _pinnarHög1 = _pinnarHög1 - antalPinnar;
-                }
-                if (högNummer == 2)
-                {
-                    _pinnarHög2 = _pinnarHög2 - antalPinnar;
-                }
+                currentPlayer = playerTwo;
             }
             else
             {
-                Console.WriteLine("Du måste skriva 0, 1 eller 2.");
-                //tusen gånger om
-                ParseInput(input);
+                currentPlayer = playerOne;
             }
-        }
-        static void CurrentPlayer(string _pinnarHög0, string _pinnarHög1, string _pinnarHög2) //fungerar ej
-        {
-            if (_currentPlayer.Equals(_spelare1))
-            {
-                _currentPlayer = _spelare2;
-            }
-            else
-            {
-                _currentPlayer = _spelare1;
-            }
+            return currentPlayer;
+
         }
 
+        static void ShowCurrentPlayer(string currentPlayer)
+        {
+            Console.WriteLine(currentPlayer + "s tur!");
+        }
+
+        static void ComputerMove(int[] gameBoard)
+        {
+            Random random = new Random();
+            int row = random.Next(0, 3);
+
+            if (gameBoard[row] > 0)
+            {
+                int sticks = random.Next(1, gameBoard[row]);
+                gameBoard[row] -= sticks;
+            }
+            else if (gameBoard[row] == 0)
+            {
+                row = random.Next(0, 3);
+            }
+
+            PrintGameBoard(gameBoard);
+        }
+
+        static void MakeMove(int[] gameBoard)
+        {
+            bool validInput = false;
+
+            do
+            {
+                Console.Write("Enter a row and the number of sticks to remove from that row, in format 'x y': ");
+                string input = Console.ReadLine();
+
+                try
+                {
+                    string[] rowsAndSticks = input.Split(' ');
+                    bool isTwoValues = CheckIfTwoValues(rowsAndSticks);
+
+                    if (isTwoValues)
+                    {
+                        string firstValue = rowsAndSticks[0];
+                        string secondValue = rowsAndSticks[1];
+
+                        int.TryParse(firstValue, out int row);
+                        int.TryParse(secondValue, out int sticks);
+
+                        bool validMove = CheckIfValidMove(row, sticks, gameBoard);
+
+                        if (validMove)
+                        {
+                            gameBoard[row] -= sticks;
+                            PrintGameBoard(gameBoard);
+                            validInput = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Not a valid row or number of sticks, try again.");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("You must enter an input in the format 'x y'. Try again.");
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("Something went wrong. Please try again.");
+                }
+            } while (!validInput);
+
+        }
+
+        static bool CheckIfTwoValues(string[] input)
+        {
+            int numberOfValues = 0;
+
+            for (int i = 0; i < input.Length; i++)
+            {
+                numberOfValues++;
+            }
+
+            if (numberOfValues == 2)
+            {
+                return true;
+            }
+            
+            return false;
+        }
+
+        static bool CheckIfValidMove(int row, int sticks, int[] gameBoard)
+        {
+            // Kolla att den valda högen finns, och att den inte är tom.
+            // Kolla att antalet stickor man vill ta bort inte överstiger det som finns.
+            try
+            {
+                bool isRowEmpty = gameBoard[row] == 0;
+                bool canRemoveNumberOfSticks = gameBoard[row] - sticks >= 0;
+
+                return !isRowEmpty && canRemoveNumberOfSticks;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        
+        
+        //static string Pinnar(int högNummer)
+        //{
+        //    switch (högNummer)
+        //    {
+        //        case 0:
+        //            return RitaUtPinnar(_pinnarHög0);
+        //            break;
+        //        case 1:
+        //            return RitaUtPinnar(_pinnarHög1);
+        //            break;
+        //        case 2:
+        //            return RitaUtPinnar(_pinnarHög2);
+        //            break;
+        //    }
+        //    Console.WriteLine("Du måste skriva 0, 1 eller 2.");
+        //    Pinnar(högNummer);
+        //    return null; //fungerar ej
+        //}
+        //static string RitaUtPinnar(int antalPinnar)
+        //{
+        //    //if (antalPinnar > 0 && antalPinnar <= 5)
+        //    {
+        //        string pinnar = "";
+        //        for (int i = 0; i < antalPinnar; i++)
+        //        {
+        //            pinnar = pinnar + "|";
+
+        //        }
+        //        return pinnar;
+        //    }
+        //    //else
+        //    //{ 
+        //    //return "error";
+        //    //Console.WriteLine("You have written a non-funtion");
+        //    //}
+        //}
+        //static void ParseInput(string input)
+        //{
+        //    if (int.TryParse(input, out int resultat))
+        //    {
+        //        string[] arr = input.Split(" ");
+
+        //        string högNummerStr = arr[0];
+        //        string antalPinnarStr = arr[1]; //error
+
+        //        int högNummer = int.Parse(högNummerStr);
+        //        int antalPinnar = int.Parse(antalPinnarStr);
+
+        //        if (högNummer == 0)
+        //        {
+        //            _pinnarHög0 = _pinnarHög0 - antalPinnar;
+        //        }
+        //        if (högNummer == 1)
+        //        {
+        //            _pinnarHög1 = _pinnarHög1 - antalPinnar;
+        //        }
+        //        if (högNummer == 2)
+        //        {
+        //            _pinnarHög2 = _pinnarHög2 - antalPinnar;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine("Du måste skriva 0, 1 eller 2.");
+        //        //tusen gånger om
+        //        ParseInput(input);
+        //    }
+        //}
     }
 }
