@@ -37,18 +37,18 @@ namespace ProjektuppgiftNim
 
         static void PrintWelcome()
         {
-            SetBackgroundTo("white");
-            SetTextHighlightTo("magenta");
-            SetTextColorTo("white");
+            SetBackgroundTo(ConsoleColor.White);
+            SetTextHighlightTo(ConsoleColor.Magenta);
+            SetTextColorTo(ConsoleColor.White);
 
             Console.WriteLine("SPELET NIM\n");
 
-            SetTextHighlightTo("white");
-            SetTextColorTo("magenta");
+            SetTextHighlightTo(ConsoleColor.White);
+            SetTextColorTo(ConsoleColor.Magenta);
 
             Console.WriteLine("Välkommen till spelet Nim!\n");
 
-            SetTextColorTo("black");
+            SetTextColorTo(ConsoleColor.Black);
 
             Console.WriteLine("(Tryck ENTER för att fortsätta)");
             Console.ReadKey();
@@ -56,14 +56,14 @@ namespace ProjektuppgiftNim
 
         static void PrintGameRules()
         {
-            SetBackgroundTo("magenta");
-            SetTextHighlightTo("white");
-            SetTextColorTo("magenta");
+            SetBackgroundTo(ConsoleColor.Magenta);
+            SetTextHighlightTo(ConsoleColor.White);
+            SetTextColorTo(ConsoleColor.Magenta);
 
             Console.WriteLine("SPELREGLER \n");
 
-            SetTextHighlightTo("magenta");
-            SetTextColorTo("white");
+            SetTextHighlightTo(ConsoleColor.Magenta);
+            SetTextColorTo(ConsoleColor.White);
 
             Console.WriteLine("- Det kommer finnas tre högar med fem stickor i varje hög.\n");
             Console.WriteLine("- Sedan kommer spelaren att få välja hur många stickor spelaren vill ta i högen genom att skriva siffran 1 till 5.\n");
@@ -74,46 +74,20 @@ namespace ProjektuppgiftNim
             Console.Clear();
         }
 
-        static void SetBackgroundTo(string color)
+        static void SetBackgroundTo(ConsoleColor color)
         {
-            if (color == "white")
-            {
-                Console.BackgroundColor = ConsoleColor.White;
-                Console.Clear();
-            }
-            else if (color == "magenta")
-            {
-                Console.BackgroundColor = ConsoleColor.Magenta;
-                Console.Clear();
-            }
+            Console.BackgroundColor = color;
+            Console.Clear();
         }
 
-        static void SetTextHighlightTo(string highlightColor)
+        static void SetTextHighlightTo(ConsoleColor highlightColor)
         {
-            if (highlightColor == "magenta")
-            {
-                Console.BackgroundColor = ConsoleColor.Magenta;
-            }
-            else if (highlightColor == "white")
-            {
-                Console.BackgroundColor = ConsoleColor.White;
-            }
+            Console.BackgroundColor = highlightColor;
         }
 
-        static void SetTextColorTo(string color)
+        static void SetTextColorTo(ConsoleColor textColor)
         {
-            if (color == "white")
-            {
-                Console.ForegroundColor = ConsoleColor.White;
-            }
-            else if (color == "magenta")
-            {
-                Console.ForegroundColor = ConsoleColor.Magenta;
-            }
-            else if (color == "black")
-            {
-                Console.ForegroundColor = ConsoleColor.Black;
-            }
+            Console.ForegroundColor = textColor;
         }
 
         static void LäsaInNamnPåSpelare()
@@ -216,5 +190,5 @@ namespace ProjektuppgiftNim
             }
         }
 
-    }  
+    }
 }
