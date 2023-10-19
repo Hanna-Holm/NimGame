@@ -1,4 +1,11 @@
-﻿using System.Drawing;
+﻿/* 
+ * Hanna Holm, Kim Secher och Lina Jakobsson
+ * 2023-10-19
+ * Microsoft Visual Studio Community 2022. Version 17.7.2
+*/
+
+
+using System.Drawing;
 
 namespace ProjektuppgiftNim
 {
@@ -6,16 +13,15 @@ namespace ProjektuppgiftNim
     {
         static void Main(string[] args)
         {
-            StartGame();
+            RunGame();
         }
 
-        static void StartGame()
+        static void RunGame()
         {
             PrintWelcome();
             PrintGameRules();
 
-            // int numberOfPlayers = SelectNumberOfPlayers();
-            int numberOfPlayers = 1;
+            int numberOfPlayers = SelectNumberOfPlayers();
 
             string playerOne = "";
             string playerTwo = "";
@@ -25,7 +31,7 @@ namespace ProjektuppgiftNim
                 if (numberOfPlayers == 1)
                 {
                     playerOne = EnterName();
-                    playerTwo = "Computer";
+                    playerTwo = "Dator";
                 }
                 else if (numberOfPlayers == 2)
                 {
@@ -34,8 +40,8 @@ namespace ProjektuppgiftNim
                 }
             } while (playerOne == playerTwo);
 
-            int scoreOfPlayerOne = 0;
-            int scoreOfPlayerTwo = 0;
+            int playerOneScore = 0;
+            int playerTwoScore = 0;
 
             bool isRunning = true;
 
@@ -51,14 +57,16 @@ namespace ProjektuppgiftNim
 
                 while (!isGameBoardEmpty)
                 {
-                    if (gameBoard[0] < 5 || gameBoard[1] < 5 || gameBoard[2] < 5)
+                    bool isFirstTurn = gameBoard[0] == 5 && gameBoard[1] == 5 && gameBoard[2] == 5;
+
+                    if (!isFirstTurn)
                     {
                         currentPlayer = ChangeCurrentPlayer(currentPlayer, playerOne, playerTwo);
                     }
 
                     ShowCurrentPlayer(currentPlayer);
 
-                    if (currentPlayer == "Computer")
+                    if (currentPlayer == "Dator")
                     {
                         ComputerMove(gameBoard);
                     }
@@ -70,6 +78,36 @@ namespace ProjektuppgiftNim
                     isGameBoardEmpty = gameBoard[0] == 0 &&
                                        gameBoard[1] == 0 &&
                                        gameBoard[2] == 0;
+                }
+
+                string winner = currentPlayer;
+                PrintWinner(winner);
+
+                if (winner == playerOne)
+                {
+                    playerOneScore = IncreaseWinnerScore(playerOneScore);
+                }
+                else
+                {
+                    playerTwoScore = IncreaseWinnerScore(playerTwoScore);
+                }
+
+                PrintScores(playerOne, playerTwo, playerOneScore, playerTwoScore);
+
+                if (numberOfPlayers == 1)
+                {
+                    ThankForPlaying(playerOne);
+                }
+                else
+                {
+                    ThankForPlaying(playerOne, playerTwo);
+                }
+
+                bool shouldRestart = AskIfRestart();
+
+                if (!shouldRestart)
+                {
+                    ExitGame();
                 }
             }
         }
@@ -131,46 +169,43 @@ namespace ProjektuppgiftNim
 
         static int SelectNumberOfPlayers()
         {
-            // do while invalid number eller validNumber == false
-            // ta in input,
-            // kolla om heltal
-            // kolla om 1 eller 2.
-            // return number;
+            bool invalidNumber = true;
 
-            //Console.WriteLine("Välj antal spelare genom att skriva 1 eller 2.");
-            //string input = Console.ReadLine();
-            //int.TryParse(input, out int numberOfPlayers);
-            //if (numberOfPlayers == 1 || numberOfPlayers == 2)
-            //{
-            //    validNumber = true;
-            //}
-            //while (validNumber == false)
-            //{
+            while (invalidNumber)
+            {
+                Console.WriteLine("Välj antal spelare genom att skriva 1 eller 2.");
+                string input = Console.ReadLine();
+                int.TryParse(input, out int numberOfPlayers);
 
-            //}
+                if (numberOfPlayers == 1 || numberOfPlayers == 2)
+                {
+                    invalidNumber = false;
+                    return numberOfPlayers;
+                }
+            }
 
-            return 2;
+            return 1;
         }
 
         static string EnterName()
         {
-            // while names är samma
-            // fråga efter namn
-            return "Hanna";
-  
-        }
-        /*
-        Tidigare:
-            static void LäsaInNamnPåSpelare()
+            bool isEmpty = true;
+            string name = "";
+
+            while (isEmpty)
             {
-                Console.WriteLine("Spelare 1:");
-                _spelare1 = Console.ReadLine();
+                Console.Write("Skriv ditt namn: ");
+                name = Console.ReadLine();
 
-                Console.WriteLine("Spelare 2:");
-                _spelare2 = (Console.ReadLine());
-
+                if (name != "")
+                {
+                    return name;
+                }
+                Console.WriteLine("Your name cannot be empty. Try again.");
             }
-        */
+
+            return name;
+        }
 
         static string SelectStartingPlayer(string playerOne, string playerTwo)
         {
@@ -208,7 +243,6 @@ namespace ProjektuppgiftNim
             }
 
             return "";
-
         }
 
         static void PrintGameBoard(int[] gameBoard)
@@ -225,20 +259,6 @@ namespace ProjektuppgiftNim
                 Console.WriteLine();
             }
         }
-        /*
-         * tidigare:
-         * static void RitaSpelplan()
-        {
-            Console.Clear();
-            Console.WriteLine(_currentPlayer + "s tur!");
-            Console.WriteLine("Hög 0: " + Pinnar(0));
-            Console.WriteLine("Hög 1: " + Pinnar(1));
-            Console.WriteLine("Hög 2: " + Pinnar(2));
-            Console.WriteLine("");
-            Console.WriteLine("Välj en hög, <mellanslag>, välj antal pinnar. Skriv \"exit\" för att lämna spelet.");
-
-        }
-         */
 
         static string ChangeCurrentPlayer(string currentPlayer, string playerOne, string playerTwo)
         {
@@ -322,7 +342,6 @@ namespace ProjektuppgiftNim
                     Console.WriteLine("Something went wrong. Please try again.");
                 }
             } while (!validInput);
-
         }
 
         static bool CheckIfTwoValues(string[] input)
@@ -358,75 +377,71 @@ namespace ProjektuppgiftNim
                 return false;
             }
         }
-        
-        
-        //static string Pinnar(int högNummer)
-        //{
-        //    switch (högNummer)
-        //    {
-        //        case 0:
-        //            return RitaUtPinnar(_pinnarHög0);
-        //            break;
-        //        case 1:
-        //            return RitaUtPinnar(_pinnarHög1);
-        //            break;
-        //        case 2:
-        //            return RitaUtPinnar(_pinnarHög2);
-        //            break;
-        //    }
-        //    Console.WriteLine("Du måste skriva 0, 1 eller 2.");
-        //    Pinnar(högNummer);
-        //    return null; //fungerar ej
-        //}
-        //static string RitaUtPinnar(int antalPinnar)
-        //{
-        //    //if (antalPinnar > 0 && antalPinnar <= 5)
-        //    {
-        //        string pinnar = "";
-        //        for (int i = 0; i < antalPinnar; i++)
-        //        {
-        //            pinnar = pinnar + "|";
 
-        //        }
-        //        return pinnar;
-        //    }
-        //    //else
-        //    //{ 
-        //    //return "error";
-        //    //Console.WriteLine("You have written a non-funtion");
-        //    //}
-        //}
-        //static void ParseInput(string input)
-        //{
-        //    if (int.TryParse(input, out int resultat))
-        //    {
-        //        string[] arr = input.Split(" ");
+        static void PrintWinner(string winner)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                Console.WriteLine("...");
+                Thread.Sleep(500);
+            }
 
-        //        string högNummerStr = arr[0];
-        //        string antalPinnarStr = arr[1]; //error
+            ChangeColor(ConsoleColor.White);
+            ChangeColor(ConsoleColor.Magenta);
+            ChangeColor(ConsoleColor.White);
+            ChangeColor(ConsoleColor.Magenta);
 
-        //        int högNummer = int.Parse(högNummerStr);
-        //        int antalPinnar = int.Parse(antalPinnarStr);
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("Congratulations " + winner + " you won the game!");
+        }
 
-        //        if (högNummer == 0)
-        //        {
-        //            _pinnarHög0 = _pinnarHög0 - antalPinnar;
-        //        }
-        //        if (högNummer == 1)
-        //        {
-        //            _pinnarHög1 = _pinnarHög1 - antalPinnar;
-        //        }
-        //        if (högNummer == 2)
-        //        {
-        //            _pinnarHög2 = _pinnarHög2 - antalPinnar;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("Du måste skriva 0, 1 eller 2.");
-        //        //tusen gånger om
-        //        ParseInput(input);
-        //    }
-        //}
+        static void ChangeColor(ConsoleColor Color)
+        {
+            Console.BackgroundColor = Color;
+            Console.Clear();
+            Thread.Sleep(500);
+        }
+
+        static int IncreaseWinnerScore(int currentScore)
+        {
+             return ++currentScore;
+        }
+
+        static void PrintScores(string playerOne, string playerTwo, int playerOneScore, int playerTwoScore)
+        {
+            Console.WriteLine("\n Scores: \n");
+            Console.WriteLine(playerOne + ": " + playerOneScore);
+            Console.WriteLine(playerTwo + ": " + playerTwoScore);
+        }
+
+        static void ThankForPlaying(string playerOne)
+        {
+            Console.WriteLine($"Thank you for playing, {playerOne}!");
+        }
+
+        static void ThankForPlaying(string playerOne, string playerTwo)
+        {
+            Console.WriteLine($"\nThank you for playing, {playerOne} and {playerTwo}!");
+        }
+
+        static bool AskIfRestart()
+        {
+            Console.WriteLine("\n\nPress Enter to play again.");
+            Console.WriteLine("\nPress 'e' to exit.");
+            string choice = Console.ReadLine();
+
+            if (choice == "e")
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        static void ExitGame()
+        {
+            Environment.Exit(0);
+        }
     }
 }
