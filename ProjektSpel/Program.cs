@@ -4,7 +4,7 @@
  * Microsoft Visual Studio Community 2022. Version 17.7.2
 */
 
-
+using System.Data;
 using System.Drawing;
 
 namespace ProjektuppgiftNim
@@ -16,6 +16,9 @@ namespace ProjektuppgiftNim
             RunGame();
         }
 
+        /// <summary>
+        /// The method for running the whole game.
+        /// </summary>
         static void RunGame()
         {
             PrintWelcome();
@@ -26,19 +29,20 @@ namespace ProjektuppgiftNim
             string playerOne = "";
             string playerTwo = "";
 
-            do
+            while (playerOne == playerTwo)
             {
+                Console.Clear();
                 if (numberOfPlayers == 1)
                 {
                     playerOne = EnterName();
-                    playerTwo = "Dator";
+                    playerTwo = LoadComputerName();
                 }
                 else if (numberOfPlayers == 2)
                 {
                     playerOne = EnterName();
                     playerTwo = EnterName();
                 }
-            } while (playerOne == playerTwo);
+            }
 
             int playerOneScore = 0;
             int playerTwoScore = 0;
@@ -50,7 +54,6 @@ namespace ProjektuppgiftNim
                 string currentPlayer = SelectStartingPlayer(playerOne, playerTwo);
 
                 int[] gameBoard = new int[] { 5, 5, 5 };
-
                 PrintGameBoard(gameBoard);
 
                 bool isGameBoardEmpty = false;
@@ -64,7 +67,7 @@ namespace ProjektuppgiftNim
                         currentPlayer = ChangeCurrentPlayer(currentPlayer, playerOne, playerTwo);
                     }
 
-                    ShowCurrentPlayer(currentPlayer);
+                    PrintCurrentPlayer(currentPlayer);
 
                     if (currentPlayer == "Dator")
                     {
@@ -72,7 +75,7 @@ namespace ProjektuppgiftNim
                     }
                     else
                     {
-                        MakeMove(gameBoard);
+                        PlayersMove(gameBoard);
                     }
 
                     isGameBoardEmpty = gameBoard[0] == 0 &&
@@ -80,8 +83,18 @@ namespace ProjektuppgiftNim
                                        gameBoard[2] == 0;
                 }
 
+                Console.Clear();
+
                 string winner = currentPlayer;
-                PrintWinner(winner);
+
+                if (winner == "Dator")
+                {
+                    PrintYouLostTheGame();
+                }
+                else
+                {
+                    PrintWinner(winner);
+                }
 
                 if (winner == playerOne)
                 {
@@ -112,6 +125,9 @@ namespace ProjektuppgiftNim
             }
         }
 
+        /// <summary>
+        /// Prints out a welcome message to the console.
+        /// </summary>
         static void PrintWelcome()
         {
             SetBackgroundTo(ConsoleColor.White);
@@ -129,8 +145,12 @@ namespace ProjektuppgiftNim
 
             Console.WriteLine("(Tryck ENTER för att fortsätta)");
             Console.ReadKey();
+            Console.Clear();
         }
 
+        /// <summary>
+        /// Prints out the game rules to the console.
+        /// </summary>
         static void PrintGameRules()
         {
             SetBackgroundTo(ConsoleColor.Magenta);
@@ -151,27 +171,43 @@ namespace ProjektuppgiftNim
             Console.Clear();
         }
 
+        /// <summary>
+        /// Set the background color in the console to a specific color.
+        /// </summary>
+        /// <param name="color">The color to set the background to.</param>
         static void SetBackgroundTo(ConsoleColor color)
         {
             Console.BackgroundColor = color;
             Console.Clear();
         }
 
+        /// <summary>
+        /// Changes the text background to a specific color.
+        /// </summary>
+        /// <param name="highlightColor">The color which the text background should be set to.</param>
         static void SetTextHighlightTo(ConsoleColor highlightColor)
         {
             Console.BackgroundColor = highlightColor;
         }
 
+        /// <summary>
+        /// Sets the text color to a specific color.
+        /// </summary>
+        /// <param name="textColor">The color which the text should be set to.</param>
         static void SetTextColorTo(ConsoleColor textColor)
         {
             Console.ForegroundColor = textColor;
         }
 
+        /// <summary>
+        /// Lets the user choose either 1 or 2 players to play.
+        /// </summary>
+        /// <returns>The chosen number of players.</returns>
         static int SelectNumberOfPlayers()
         {
-            bool invalidNumber = true;
+            bool validNumber = false;
 
-            while (invalidNumber)
+            while (validNumber == false)
             {
                 Console.WriteLine("Välj antal spelare genom att skriva 1 eller 2.");
                 string input = Console.ReadLine();
@@ -179,7 +215,7 @@ namespace ProjektuppgiftNim
 
                 if (numberOfPlayers == 1 || numberOfPlayers == 2)
                 {
-                    invalidNumber = false;
+                    validNumber = true;
                     return numberOfPlayers;
                 }
             }
@@ -187,6 +223,10 @@ namespace ProjektuppgiftNim
             return 1;
         }
 
+        /// <summary>
+        /// Lets the user enter a name.
+        /// </summary>
+        /// <returns>The name of the player.</returns>
         static string EnterName()
         {
             bool isEmpty = true;
@@ -197,26 +237,45 @@ namespace ProjektuppgiftNim
                 Console.Write("Skriv ditt namn: ");
                 name = Console.ReadLine();
 
-                if (name != "")
+                if (name == "")
                 {
-                    return name;
+                    Console.WriteLine("Du måste ange ett namn. Försök igen.");
                 }
-                Console.WriteLine("Your name cannot be empty. Try again.");
+                else
+                {
+                    isEmpty = false;
+                }
             }
 
             return name;
         }
 
+        /// <summary>
+        /// Contains the name of the computer.
+        /// </summary>
+        /// <returns>The computer name.</returns>
+        static string LoadComputerName()
+        {
+            string name = "Dator";
+            return name;
+        }
+
+        /// <summary>
+        /// Lets the player select who will start.
+        /// </summary>
+        /// <param name="playerOne">The first player.</param>
+        /// <param name="playerTwo">The second player.</param>
+        /// <returns>The selected starting player.</returns>
         static string SelectStartingPlayer(string playerOne, string playerTwo)
         {
             bool validNumber = false;
 
             while (!validNumber)
             {
-                Console.WriteLine("Who will start?");
+                Console.WriteLine("Vem ska börja?");
                 Console.WriteLine("1: " + playerOne);
                 Console.WriteLine("2: " + playerTwo);
-                Console.Write("Choose 1 or 2: ");
+                Console.Write("Välj 1 eller 2: ");
 
                 string choice = Console.ReadLine();
                 bool isnumber = int.TryParse(choice, out int number);
@@ -233,23 +292,29 @@ namespace ProjektuppgiftNim
                     }
                     else
                     {
-                        Console.WriteLine("Invalid number.");
+                        Console.WriteLine("Ogiltig nummer.");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("You must enter a number.");
+                    Console.WriteLine("Du måste ange ett nummer.");
                 }
             }
 
             return "";
         }
 
+        /// <summary>
+        /// Prints out the current number of sticks for each row in the game board.
+        /// </summary>
+        /// <param name="gameBoard">The game board data.</param>
         static void PrintGameBoard(int[] gameBoard)
         {
-            // [ 5, 5, 5 ]
+            Console.Clear();
+
             for (int i = 0; i < gameBoard.Length; i++)
             {
+                Console.Write($"Hög {i + 1}: ");
                 int numbersOfSticks = gameBoard[i];
 
                 for (int j = 0; j < numbersOfSticks; j++)
@@ -260,6 +325,13 @@ namespace ProjektuppgiftNim
             }
         }
 
+        /// <summary>
+        /// Changes the current player from the previous player.
+        /// </summary>
+        /// <param name="currentPlayer">The current player, could be either the first player or the second player.</param>
+        /// <param name="playerOne">The first player.</param>
+        /// <param name="playerTwo">The second player.</param>
+        /// <returns></returns>
         static string ChangeCurrentPlayer(string currentPlayer, string playerOne, string playerTwo)
         {
             if (currentPlayer == playerOne)
@@ -274,36 +346,80 @@ namespace ProjektuppgiftNim
 
         }
 
-        static void ShowCurrentPlayer(string currentPlayer)
+        /// <summary>
+        /// Prints out which player who is the current player.
+        /// </summary>
+        /// <param name="currentPlayer">The current player, could be either the first player or the second player.</param>
+        static void PrintCurrentPlayer(string currentPlayer)
         {
             Console.WriteLine(currentPlayer + "s tur!");
         }
 
+        /// <summary>
+        /// Randomizes a row and number of sticks to remove from the game board.
+        /// </summary>
+        /// <param name="gameBoard">The game board data.</param>
         static void ComputerMove(int[] gameBoard)
         {
+            Thread.Sleep(1500);
             Random random = new Random();
-            int row = random.Next(0, 3);
 
-            if (gameBoard[row] > 0)
-            {
-                int sticks = random.Next(1, gameBoard[row]);
-                gameBoard[row] -= sticks;
-            }
-            else if (gameBoard[row] == 0)
+            int row;
+            do
             {
                 row = random.Next(0, 3);
+            }
+            while (gameBoard[row] == 0);
+
+            int maxSticksToRemove = gameBoard[row] + 1;
+
+            bool firstRowIsEmpty = gameBoard[0] == 0;
+            bool secondRowIsEmpty = gameBoard[1] == 0;
+            bool thirdRowIsEmpty = gameBoard[2] == 0;
+
+            bool twoRowsAreEmpty = (firstRowIsEmpty && secondRowIsEmpty) ||
+                                   (secondRowIsEmpty && thirdRowIsEmpty) ||
+                                   (firstRowIsEmpty && thirdRowIsEmpty);
+            if (twoRowsAreEmpty)
+            {
+                int computerSmartMove = random.Next(1, 3);
+
+                if (computerSmartMove == 1)
+                {
+                    gameBoard[row] = 0;
+                }
+                else
+                {
+                    int sticksToRemove = random.Next(1, maxSticksToRemove);
+                    gameBoard[row] -= sticksToRemove;
+
+                    bool ifOnlyOneStickLeft = gameBoard[row] == 1;
+                    if (ifOnlyOneStickLeft)
+                    {
+                        gameBoard[row] = 0;
+                    }
+                }
+            }
+            else
+            {
+                int sticksToRemove = random.Next(1, maxSticksToRemove);
+                gameBoard[row] -= sticksToRemove;
             }
 
             PrintGameBoard(gameBoard);
         }
 
-        static void MakeMove(int[] gameBoard)
+        /// <summary>
+        /// Lets the user enter a row and a number of sticks to remove from the game board.
+        /// </summary>
+        /// <param name="gameBoard">The game board data.</param>
+        static void PlayersMove(int[] gameBoard)
         {
             bool validInput = false;
 
             do
             {
-                Console.Write("Enter a row and the number of sticks to remove from that row, in format 'x y': ");
+                Console.Write("Ange en rad av nummret av stickor att ta bort från den raden, i formatet 'x y': ");
                 string input = Console.ReadLine();
 
                 try
@@ -319,6 +435,8 @@ namespace ProjektuppgiftNim
                         int.TryParse(firstValue, out int row);
                         int.TryParse(secondValue, out int sticks);
 
+                        row -= 1;
+
                         bool validMove = CheckIfValidMove(row, sticks, gameBoard);
 
                         if (validMove)
@@ -327,23 +445,24 @@ namespace ProjektuppgiftNim
                             PrintGameBoard(gameBoard);
                             validInput = true;
                         }
-                        else
-                        {
-                            Console.WriteLine("Not a valid row or number of sticks, try again.");
-                        }
                     }
                     else
                     {
-                        Console.WriteLine("You must enter an input in the format 'x y'. Try again.");
+                        Console.WriteLine("Du måste ange en input i formatet 'x y', försök igen.");
                     }
                 }
                 catch
                 {
-                    Console.WriteLine("Something went wrong. Please try again.");
+                    Console.WriteLine("Något gick del, försök igen.");
                 }
             } while (!validInput);
         }
 
+        /// <summary>
+        /// Checks if the user input consists of two values.
+        /// </summary>
+        /// <param name="input">The user input.</param>
+        /// <returns>True or false depending on if the input consists of two values or not.</returns>
         static bool CheckIfTwoValues(string[] input)
         {
             int numberOfValues = 0;
@@ -357,27 +476,77 @@ namespace ProjektuppgiftNim
             {
                 return true;
             }
-            
+
             return false;
         }
 
+        /// <summary>
+        /// Checks if the selected row and number of sticks are valid and exists in game board.
+        /// </summary>
+        /// <param name="row">The selected row.</param>
+        /// <param name="sticks">The selected number of sticks.</param>
+        /// <param name="gameBoard">The game board data.</param>
+        /// <returns>True if the row and number of sticks are valid, and false if either one or both of them are not.</returns>
         static bool CheckIfValidMove(int row, int sticks, int[] gameBoard)
         {
-            // Kolla att den valda högen finns, och att den inte är tom.
-            // Kolla att antalet stickor man vill ta bort inte överstiger det som finns.
-            try
-            {
-                bool isRowEmpty = gameBoard[row] == 0;
-                bool canRemoveNumberOfSticks = gameBoard[row] - sticks >= 0;
+            bool validRow = CheckIfValidRow(row, gameBoard);
 
-                return !isRowEmpty && canRemoveNumberOfSticks;
-            }
-            catch
+            if (validRow)
             {
+                bool validNumberOfSticks = CheckIfValidNumberOfSticks(row, sticks, gameBoard);
+
+                if (!validNumberOfSticks)
+                {
+                    Console.WriteLine("Du måste ange ett giltigt antal stickor. Försök igen.");
+                }
+
+                return validNumberOfSticks;
+            }
+            else
+            {
+                Console.WriteLine("Du måste ange en giltig rad. Försök igen.");
                 return false;
             }
         }
 
+        /// <summary>
+        /// Checks if the selected row is valid and exists in the game board.
+        /// </summary>
+        /// <param name="row">The selected row.</param>
+        /// <param name="gameBoard">The game board data.</param>
+        /// <returns>True if the row is valid, false if it is not.</returns>
+        static bool CheckIfValidRow(int row, int[] gameBoard)
+        {
+            bool rowExists = row >= 0 && row <= 2;
+            bool rowIsEmpty = true;
+
+            if (rowExists)
+            {
+                rowIsEmpty = gameBoard[row] == 0;
+            }
+
+            return rowExists && !rowIsEmpty;
+        }
+
+        /// <summary>
+        /// Checks if the selected number of sticks is valid and exists in the game board in the selected row.
+        /// </summary>
+        /// <param name="row">The selected row.</param>
+        /// <param name="sticks">The selected number of sticks to remove in the row.</param>
+        /// <param name="gameBoard">The game board data.</param>
+        /// <returns>True if the selected number of sticks is valid, false if it is not.</returns>
+        static bool CheckIfValidNumberOfSticks(int row, int sticks, int[] gameBoard)
+        {
+            bool inputIsZeroSticks = sticks == 0;
+            bool canRemoveNumberOfSticks = gameBoard[row] - sticks >= 0;
+
+            return !inputIsZeroSticks && canRemoveNumberOfSticks;
+        }
+
+        /// <summary>
+        /// Prints out the player who won the game.
+        /// </summary>
+        /// <param name="winner">The player who won.</param>
         static void PrintWinner(string winner)
         {
             for (int i = 0; i < 4; i++)
@@ -386,59 +555,116 @@ namespace ProjektuppgiftNim
                 Thread.Sleep(500);
             }
 
-            ChangeColor(ConsoleColor.White);
-            ChangeColor(ConsoleColor.Magenta);
-            ChangeColor(ConsoleColor.White);
-            ChangeColor(ConsoleColor.Magenta);
+            BlinkBackgroundColor(ConsoleColor.White);
+            BlinkBackgroundColor(ConsoleColor.Magenta);
+            BlinkBackgroundColor(ConsoleColor.White);
+            BlinkBackgroundColor(ConsoleColor.Magenta);
 
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.WriteLine("Congratulations " + winner + " you won the game!");
+            Console.WriteLine("Grattis " + winner + " du vann!");
         }
 
-        static void ChangeColor(ConsoleColor Color)
+        /// <summary>
+        /// Prints out a message for losing the game.
+        /// </summary>
+        static void PrintYouLostTheGame()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                Console.WriteLine("...");
+                Thread.Sleep(500);
+            }
+
+            BlinkBackgroundColor(ConsoleColor.White);
+            BlinkBackgroundColor(ConsoleColor.Black);
+            BlinkBackgroundColor(ConsoleColor.White);
+            BlinkBackgroundColor(ConsoleColor.Black);
+
+            Console.BackgroundColor = ConsoleColor.Magenta;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("Oh nej, du förlorade!");
+        }
+
+        /// <summary>
+        /// Changes the color of the console background for a set period of time.
+        /// </summary>
+        /// <param name="Color">The color to change to.</param>
+        static void BlinkBackgroundColor(ConsoleColor Color)
         {
             Console.BackgroundColor = Color;
             Console.Clear();
             Thread.Sleep(500);
         }
 
+        /// <summary>
+        /// Increases the score.
+        /// </summary>
+        /// <param name="currentScore">The score of the player.</param>
+        /// <returns>The score increased by one.</returns>
         static int IncreaseWinnerScore(int currentScore)
         {
-             return ++currentScore;
+            return ++currentScore;
         }
 
+        /// <summary>
+        /// Prints out the current scores for both of the players.
+        /// </summary>
+        /// <param name="playerOne">The first player.</param>
+        /// <param name="playerTwo">The second player.</param>
+        /// <param name="playerOneScore">The score of the first player.</param>
+        /// <param name="playerTwoScore">The score of the second player.</param>
         static void PrintScores(string playerOne, string playerTwo, int playerOneScore, int playerTwoScore)
         {
-            Console.WriteLine("\n Scores: \n");
+            Console.WriteLine("\n Poäng: \n");
             Console.WriteLine(playerOne + ": " + playerOneScore);
             Console.WriteLine(playerTwo + ": " + playerTwoScore);
         }
 
+        /// <summary>
+        /// Prints out a message to the console, thanking the player for playing the game.
+        /// </summary>
+        /// <param name="playerOne">The first player.</param>
         static void ThankForPlaying(string playerOne)
         {
-            Console.WriteLine($"Thank you for playing, {playerOne}!");
+            Console.WriteLine($"Tack för att du spelade, {playerOne}!");
         }
 
+        /// <summary>
+        /// Prints out a message to the console, thanking the players for playing the game.
+        /// </summary>
+        /// <param name="playerOne">The first player.</param>
+        /// <param name="playerTwo">The second player.</param>
         static void ThankForPlaying(string playerOne, string playerTwo)
         {
-            Console.WriteLine($"\nThank you for playing, {playerOne} and {playerTwo}!");
+            Console.WriteLine($"\nTack för att ni spelade, {playerOne} och {playerTwo}!");
         }
 
+        /// <summary>
+        /// Lets the player choose if they want to play the game again or exit.
+        /// </summary>
+        /// <returns>Returns true if the player chooses to play again, and false if the choice is to exit.</returns>
         static bool AskIfRestart()
         {
-            Console.WriteLine("\n\nPress Enter to play again.");
-            Console.WriteLine("\nPress 'e' to exit.");
+            Console.WriteLine("\n\nTryck Enter för att spela igen.");
+            Console.WriteLine("\nTryck 'a' för att avluta.");
             string choice = Console.ReadLine();
 
-            if (choice == "e")
+            if (choice == "a")
             {
                 return false;
             }
 
+            Console.Clear();
+            SetBackgroundTo(ConsoleColor.Magenta);
+            SetTextColorTo(ConsoleColor.White);
+
             return true;
         }
 
+        /// <summary>
+        /// Ends the game and closes the application.
+        /// </summary>
         static void ExitGame()
         {
             Environment.Exit(0);
