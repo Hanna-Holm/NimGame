@@ -6,9 +6,9 @@ This project is a simple console application for playing the classic game of Nim
 The Nim game is a two-player mathematical strategy game where players take turns removing objects from distinct heaps or piles. In this console application, the game is played with a set of numbered piles, and players alternate choosing a pile and removing a certain number of objects.
 
 ### Project Details
-Programming Language: C#
-Project Type: Console Application
-Course: The Basics of Programming (Information Systems Bachelor's Program)
+* Programming Language: C#
+* Project Type: Console Application
+* Course: The Basics of Programming (Information Systems Bachelor's Program)
 
 ### How to Play
 Start the game by running the application.
